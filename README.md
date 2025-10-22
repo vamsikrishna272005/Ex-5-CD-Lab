@@ -1,8 +1,8 @@
 # Ex-5-RECOGNITION-OF-THE-GRAMMAR-anb-where-n-10-USING-YACC
-# RECOGNITION OF THE GRAMMAR(anb where n>=10) USING YACC
-# Date:23-10-2024
-# Name:Vamsi Krishna G
-# Reg No:212223220120
+RECOGNITION OF THE GRAMMAR(anb where n>=10) USING YACC
+## Date: 22-10-2025
+## Name: Vamsi Krishna G
+## Reg.No: 212223220120
 # Aim:
 To write a YACC program to recognize the grammar anb where n>=10.
 # ALGORITHM
@@ -14,55 +14,66 @@ To write a YACC program to recognize the grammar anb where n>=10.
 6.	Compile the yacc program with yacc compiler to produce output file as y.tab.c. eg $ yacc –d arith_id.y
 7.	Compile these with the C compiler as gcc lex.yy.c y.tab.c
 8.	Enter a string as input and it is identified as valid or invalid.
-## PROGRAM:
-Grammar.l
-
-
-```
+# PROGRAM:
+L File
+``` c
 %{
 #include "y.tab.h"
 %}
 
 %%
-a    { return A; }  // Recognize 'a' as token A
-b    { return B; }  // Recognize 'b' as token B
-.    { return 0; }  // End of input
+a   { return A; }
+b   { return B; }
+\n  { return '\n'; }
+.   { return yytext[0]; }
 %%
 
 int yywrap() {
     return 1;
 }
 ```
-Grammar.y
-```
+
+Y File
+``` c
 %{
 #include <stdio.h>
-int yylex(void);
-void yyerror(const char *s);
+#include <stdlib.h>
+int count = 0;  // to count number of a's
 %}
 
 %token A B
 
 %%
-S   : A A A A A A A A A A B    { printf("Valid string\n"); }
-    | A S B                    { printf("Valid string\n"); }
+start:
+    sequence B '\n' {
+        if (count >= 10) {
+            printf("Valid string: %d a's followed by b\n", count);
+        } else {
+            printf("Invalid: Less than 10 a's\n");
+        }
+        count = 0; // reset for next input
+    }
     ;
 
+sequence:
+    A { count++; }
+  | sequence A { count++; }
+  ;
 %%
 
 int main() {
-    printf("Enter a string:\n");
-    yyparse();
-    return 0;
+    printf("Enter a string (aⁿb where n >= 10):\n");
+    return yyparse();
 }
 
-void yyerror(const char *s) {
-    printf("Invalid string\n");
+void yyerror(const char *msg) {
+    printf("Syntax error: %s\n", msg);
 }
-
 ```
+
 # OUTPUT
-![379106648-238350e9-88b9-40aa-851e-101cbc1cae3e](https://github.com/user-attachments/assets/9907dc97-6f7a-4a4a-85e6-13e6fc00bc0d)
+
+<img width="745" height="756" alt="image" src="https://github.com/user-attachments/assets/3dc253cc-4e27-444f-aa7f-f39f39d7c4ee" />
 
 
 # RESULT
