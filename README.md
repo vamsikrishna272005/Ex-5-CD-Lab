@@ -1,6 +1,6 @@
 # Ex-5-RECOGNITION-OF-THE-GRAMMAR-anb-where-n-10-USING-YACC
 RECOGNITION OF THE GRAMMAR(anb where n>=10) USING YACC
-## Date: 22-10-2025
+## Date: 4-11-2025
 ## Name: Vamsi Krishna G
 ## Reg.No: 212223220120
 # Aim:
